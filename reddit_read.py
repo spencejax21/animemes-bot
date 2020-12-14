@@ -3,6 +3,13 @@ import os
 from anime_bot import post
 import urllib
 from datetime import datetime
+import psycopg2
+import requests
+
+#os.environ['DATABASE_URL'] = "postgres://idhumhpdxrelqx:a759859762e595ce06f2fa14f9a192fc05c6de5f7885060ae0320f2d60ab47ea@ec2-54-161-58-21.compute-1.amazonaws.com:5432/d52rjkrjkl9eau"
+#DATABASE_URL = os.environ['DATABASE_URL']
+
+#conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 reddit = praw.Reddit('bot1')
 subreddit = reddit.subreddit('animemes')
@@ -28,7 +35,7 @@ def get_hot_posts(subreddit):
         post_data.append(submission.is_self)
         post_data.append(submission.over_18)
         hot_posts.append(post_data)
-    print(hot_posts)
+    
     return hot_posts
     
 def post_filter(hot_posts):
@@ -57,10 +64,11 @@ def get_post_url(post):
 def upload(post_list):
 
     if(post_list):
-        print("Uploading...")
+        
         for x in post_list: 
-            print("Posting " + x[1] + "...")
-            post(str(x[6]) + ".jpg", x[1] + "\nOP: u/" + x[3] + "\n#animemes #anime #memes #funny #funnymemes")
+            if(os.path.isfile(str(x[6]) + ".jpg")):
+                print("Posting " + x[1] + "...")
+                post(str(x[6]) + ".jpg", x[1] + "\nOP: u/" + x[3] + "\n#animemes #anime #memes #funny #funnymemes")
         else:
             print("Process complete.")
     
@@ -72,8 +80,13 @@ def download_images(post_list):
 
     if(post_list):
         for x in post_list:
+            print(x[2])
             number = get_post_number()
-            urllib.request.urlretrieve(x[2], str(number) + ".jpg")
+            try:
+                urllib.request.urlretrieve(x[2], str(number) + ".jpg")
+            except RuntimeError:
+                print("Unsupported file format")
+
             x.append(number)
 
 def get_post_number():
@@ -90,7 +103,10 @@ def get_feed():
     
     post_list = post_filter(get_hot_posts(subreddit))
     if(post_list):
-        download_images(post_list)
-        upload(post_list)
+        try:
+            download_images(post_list)
+            upload(post_list)
+        except RuntimeError:
+            print("Unsupported file format; could not complete process")
 
 get_feed()
