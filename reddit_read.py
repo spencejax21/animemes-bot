@@ -88,7 +88,8 @@ def get_post_number():
 def get_feed():    
     
     post_list = post_filter(get_hot_posts(subreddit))
-    download_images(post_list)
-    upload(post_list)
+    if(post_list):
+        download_images(post_list)
+        upload(post_list)
 
 get_feed()
