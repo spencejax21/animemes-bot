@@ -28,6 +28,7 @@ def get_hot_posts(subreddit):
         post_data.append(submission.is_self)
         post_data.append(submission.over_18)
         hot_posts.append(post_data)
+    print(hot_posts)
     return hot_posts
     
 def post_filter(hot_posts):
