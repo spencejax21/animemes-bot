@@ -1,1 +1,1 @@
-worker: reddit_read.py
+worker: python reddit_read.py
