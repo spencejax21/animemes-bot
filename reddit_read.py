@@ -5,23 +5,18 @@ import urllib
 from datetime import datetime
 import psycopg2
 import requests
+import credentials
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
-#conn = psycopg2.connect(database = 'postgres', user='postgres', password='Airforce@2020', host='localhost')
-
-
+#connects with subreddit using praw credentials
 reddit = praw.Reddit('bot1')
-subreddit = reddit.subreddit('animemes')
+subreddit = reddit.subreddit(credentials.get_subreddit())
 
+#returns list containing ids of posts that have already been posted
 def get_already_posted():
     
-    #already_posted = []
-    #if os.path.isfile("already_posted.txt"):
-        #with open("already_posted.txt","r") as f:
-            #already_posted = (f.read()).split("\n")
-            #already_posted = list(filter(None, already_posted))
-    #return already_posted
+
     already_posted = []
     try:
         conn = psycopg2.connect(DATABASE_URL)
@@ -30,8 +25,7 @@ def get_already_posted():
         row = cur.fetchone()
 
         while row is not None:
-            already_posted.append(row)
-            print(already_posted)
+            already_posted.append(row[0])
             row = cur.fetchone()
 
         cur.close()
@@ -42,6 +36,7 @@ def get_already_posted():
             conn.close()
         return already_posted
 
+#returns a list of the 10 hottest posts from the subreddit
 def get_hot_posts(subreddit):
 
     hot_posts = []
@@ -57,6 +52,8 @@ def get_hot_posts(subreddit):
     
     return hot_posts
     
+#returns a filtered version of the hot posts list
+#excludes posts that have already been posted, aren't images, or are NSFW
 def post_filter(hot_posts):
 
     fresh_posts = []
@@ -69,67 +66,56 @@ def post_filter(hot_posts):
     return fresh_posts
 
 
+#writes the newly posted posts' ids to the database
 def write_posted(post):
 
-    #if os.path.isfile("already_posted.txt"):
-        #with open("already_posted.txt","a") as f:
-            #f.write("\n" + post)
     conn = psycopg2.connect(DATABASE_URL)
     cur = conn.cursor()
 
-    cur.execute("INSERT INTO posts (post_id) VALUES (%s) RETURNING post_number", (post,) )
-    post_number = cur.fetchone()[0]
+    cur.execute("INSERT INTO posts (post_id) VALUES (%s)", (post,) )
 
     conn.commit()
     cur.close()
     conn.close()
  
+#gets the url of the post
 def get_post_url(post):
     
     print(post[2])
 
-
+#uploads each post on the list to Instagram
 def upload(post_list):
 
     if(post_list):
         
         for x in post_list: 
-            if(os.path.isfile(str(x[6]) + ".jpg")):
+            if(os.path.isfile(str(x[0]) + ".jpg")):
                 print("Posting " + x[1] + "...")
                 try:
-                    post(str(x[6]) + ".jpg", x[1] + "\nOP: u/" + x[3] + "\n#animemes #anime #memes #funny #funnymemes")
+                    post(str(x[0]) + ".jpg", x[1] + "\nOP: u/" + x[3] + "\n#animemes #anime #memes #funny #funnymemes")
                 except RuntimeError:
                     print("Unsupported file format; could not complete process")
         else:
             print("Process complete.")
     
+    #Note: this function is only necessary if running locally; with Heroku's ephemeral drive it is unecessary
     #for file in os.listdir('./'): 
         #if (file.endswith('.jpg') or file.endswith('jpg.REMOVE_ME')):
             #os.remove(file)
             
+#downloads the images to the hard drive (using Heroku, the hard drive is ephemeral and these are lost once the session ends)
 def download_images(post_list):
 
     if(post_list):
         for x in post_list:
             print(x[2])
-            number = get_post_number()
             try:
-                urllib.request.urlretrieve(x[2], str(number) + ".jpg")
+                urllib.request.urlretrieve(x[2], x[0] + ".jpg")
             except RuntimeError:
                 print("Unsupported file format")
 
-            x.append(number)
 
-def get_post_number():
-
-    number = 0
-    if os.path.isfile("post_number.txt"):
-        with open("post_number.txt","r") as f:
-            number = int(f.read())
-        with open("post_number.txt","w") as f:
-            f.write(str(number+1))
-    return number
-
+#executes the program and posts the images
 def get_feed():    
     
     post_list = post_filter(get_hot_posts(subreddit))
