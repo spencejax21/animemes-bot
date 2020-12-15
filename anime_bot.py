@@ -1,10 +1,9 @@
 from instabot import Bot
-from credentials  import get_password
-from credentials import get_username
+import os
 
 
 posting_bot = Bot()
-posting_bot.login(username=get_username(), password=get_password())
+posting_bot.login(username=os.environ('ACCOUNT_USERNAME'), password=os.environ('ACCOUNT_PASSWORD'))
 
 def post(url, cap):
     posting_bot.upload_photo(url,cap)

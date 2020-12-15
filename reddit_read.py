@@ -5,13 +5,12 @@ import urllib
 from datetime import datetime
 import psycopg2
 import requests
-import credentials
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
 #connects with subreddit using praw credentials
 reddit = praw.Reddit('bot1')
-subreddit = reddit.subreddit(credentials.get_subreddit())
+subreddit = reddit.subreddit(os.environ('SUBREDDIT'))
 
 #returns list containing ids of posts that have already been posted
 def get_already_posted():
