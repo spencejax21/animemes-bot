@@ -10,7 +10,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 #connects with subreddit using praw credentials
 reddit = praw.Reddit('bot1')
-subreddit = reddit.subreddit(os.environ('Animemes'))
+subreddit = reddit.subreddit('Animemes')
 
 #returns list containing ids of posts that have already been posted
 def get_already_posted():
@@ -124,3 +124,4 @@ def get_feed():
         upload(post_list)
         
 get_feed()
+
