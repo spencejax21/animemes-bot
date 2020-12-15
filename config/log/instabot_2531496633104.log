@@ -1,0 +1,31 @@
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (bot) - INFO - Instabot version: 0.117.0 Started
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (bot) - DEBUG - Bot imported from C:\Users\Student\AppData\Local\Programs\Python\Python39\lib\site-packages\instabot\bot\bot.py
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (api_login) - DEBUG - Loading cookies
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (api_login) - DEBUG - Loading uuids
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (api_login) - INFO - Recovery from C:\Users\Student\animemes bot/config/reddit_animemes_uuid_and_cookie.json: COOKIE True - UUIDs True - TIMING, DEVICE and ...
+- user-agent=Instagram 117.0.0.28.123 Android (28/9.0; 420dpi; 1080x1920; OnePlus; ONEPLUS A3003; OnePlus3; qcom; en_US; 180322800)
+- phone_id=9118a52d-8920-4403-a149-b80f17a6476b
+- uuid=ffe10acf-dcef-476c-a79a-dccdcbe1367f
+- client_session_id=553e16d9-1e13-4d80-ba74-4793dd0c956e
+- device_id=android-d4ae830ddc4f9ec7
+2020-12-15 11:16:32,099 - instabot version: 0.117.0 (api_login) - INFO - LOGIN FLOW! Just logged-in: False
+2020-12-15 11:16:33,548 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: feed/timeline/ returned response: <Response [200]>
+2020-12-15 11:16:33,898 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: feed/reels_tray/ returned response: <Response [200]>
+2020-12-15 11:16:33,898 - instabot version: 0.117.0 (api) - INFO - Logged-in successfully as 'reddit_animemes'!
+2020-12-15 11:16:33,898 - instabot version: 0.117.0 (bot_checkpoint) - DEBUG - Loading Checkpoint file from: C:\Users\Student\animemes bot/config/reddit_animemes.checkpoint
+2020-12-15 11:17:11,353 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: media/configure/? returned response: <Response [500]>
+2020-12-15 11:17:11,369 - instabot version: 0.117.0 (api) - DEBUG - Responsecode indicates error; response content: b'{"message": "Unknown Server Error.", "status": "fail"}'
+2020-12-15 11:17:11,369 - instabot version: 0.117.0 (api) - ERROR - Request returns 500 error!
+2020-12-15 11:17:29,143 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: media/configure/? returned response: <Response [200]>
+2020-12-15 11:17:29,255 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/expose/ returned response: <Response [200]>
+2020-12-15 11:17:29,255 - instabot version: 0.117.0 (bot_photo) - INFO - Photo '49.jpg' is uploaded.
+2020-12-15 11:17:51,291 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: media/configure/? returned response: <Response [200]>
+2020-12-15 11:17:51,406 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/expose/ returned response: <Response [200]>
+2020-12-15 11:17:51,406 - instabot version: 0.117.0 (bot_photo) - INFO - Photo '50.jpg' is uploaded.
+2020-12-15 11:17:55,035 - instabot version: 0.117.0 (api_photo) - ERROR - Photo does not have a compatible photo aspect ratio.
+2020-12-15 11:17:55,035 - instabot version: 0.117.0 (bot_photo) - INFO - Photo '51.jpg' is not uploaded.
+2020-12-15 11:18:17,242 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: media/configure/? returned response: <Response [200]>
+2020-12-15 11:18:17,355 - instabot version: 0.117.0 (api) - DEBUG - POST to endpoint: qe/expose/ returned response: <Response [200]>
+2020-12-15 11:18:17,355 - instabot version: 0.117.0 (bot_photo) - INFO - Photo '52.jpg' is uploaded.
+2020-12-15 11:18:21,207 - instabot version: 0.117.0 (bot_checkpoint) - DEBUG - Saving Checkpoint file to: C:\Users\Student\animemes bot/config/reddit_animemes.checkpoint
+2020-12-15 11:18:21,207 - instabot version: 0.117.0 (bot) - INFO - Total requests: 78
