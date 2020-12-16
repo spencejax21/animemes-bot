@@ -2,3 +2,4 @@ praw.ini
 config/*
 __pycache__/*
 runtime.txt
+credentials.py
